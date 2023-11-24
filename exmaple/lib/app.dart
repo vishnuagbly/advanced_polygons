@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
           shape: RoundedRectangleBorder(
             borderRadius: Globals.borderRadius,
           ),
+          margin: EdgeInsets.zero,
           color: Colors.white10,
         ),
         useMaterial3: true,
