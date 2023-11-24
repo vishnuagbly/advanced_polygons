@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:advanced_polygons/advanced_polygons.dart';
 import 'package:exmaple/globals.dart';
 import 'package:flutter/material.dart';
@@ -45,12 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const Spacer(),
               LayoutBuilder(builder: (context, constraints) {
-                final width = constraints.maxWidth;
+                final side = min(constraints.maxWidth, constraints.maxHeight);
                 return Stack(
                   children: [
                     Container(
-                      width: width,
-                      height: width,
+                      width: side,
+                      height: side,
                       decoration: BoxDecoration(
                         color: Colors.white10,
                         borderRadius: Globals.borderRadius,
@@ -84,27 +86,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           ..color = Colors.blue
                           ..strokeWidth = 5,
                       ),
-                      size: Size.square(width),
+                      size: Size.square(side),
                     ),
                   ],
                 );
               }),
               const SizedBox(height: 20),
               LayoutBuilder(builder: (context, constraints) {
-                final width = constraints.maxWidth;
+                final side = min(constraints.maxHeight, constraints.maxWidth);
                 return Card(
                   child: Container(
-                    width: width,
+                    width: side,
+                    height: side,
                     padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        for (final name in kAllBooleanArgsNames)
-                          ListTileSwitch(
-                            text: name,
-                            value: args[name] as bool,
-                            onChanged: (_) => setState(() => args[name] = _),
-                          ),
-                      ],
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (final name in kAllBooleanArgsNames)
+                            ListTileSwitch(
+                              text: name,
+                              value: args[name] as bool,
+                              onChanged: (_) => setState(() => args[name] = _),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 );
