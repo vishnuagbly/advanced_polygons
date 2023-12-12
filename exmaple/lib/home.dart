@@ -37,18 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: Column(
-            children: [
-              const Spacer(),
-              LayoutBuilder(builder: (context, constraints) {
-                final side = min(constraints.maxWidth, constraints.maxHeight);
-                return Stack(
+  static _genSideLength(BoxConstraints constraints) {
+    return min(constraints.maxWidth, constraints.maxHeight);
+  }
+
+  List<Widget> _elements(Axis axis) => [
+        Expanded(
+          child: LayoutBuilder(builder: (context, constraints) {
+            final side = _genSideLength(constraints);
+            return Flex(
+              direction: axis,
+              children: [
+                const Spacer(),
+                Stack(
                   children: [
                     Container(
                       width: side,
@@ -89,12 +90,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       size: Size.square(side),
                     ),
                   ],
-                );
-              }),
-              const SizedBox(height: 20),
-              LayoutBuilder(builder: (context, constraints) {
-                final side = min(constraints.maxHeight, constraints.maxWidth);
-                return Card(
+                ),
+              ],
+            );
+          }),
+        ),
+        const SizedBox(height: 20, width: 20),
+        Expanded(
+          child: LayoutBuilder(builder: (context, constraints) {
+            final side = _genSideLength(constraints);
+            return Flex(
+              direction: axis,
+              children: [
+                Card(
                   child: Container(
                     width: side,
                     height: side,
@@ -113,10 +121,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                );
-              }),
-              const Spacer(),
-            ],
+                ),
+                const Spacer(),
+              ],
+            );
+          }),
+        ),
+      ];
+
+  Axis _genAxis(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    if (screenSize.height > screenSize.width) return Axis.vertical;
+    return Axis.horizontal;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final axis = _genAxis(context);
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: Flex(
+            direction: axis,
+            children: _elements(axis),
           ),
         ),
       ),
