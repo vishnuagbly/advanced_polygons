@@ -1,6 +1,6 @@
 name: advanced_polygons
 description: Draw advanced polygons, using this package.
-version: 0.0.1
+version: 0.0.1+1
 homepage: https://polygons.vishnuworld.com
 
 environment:
