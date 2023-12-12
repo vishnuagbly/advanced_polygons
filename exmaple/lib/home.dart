@@ -5,7 +5,7 @@ import 'package:exmaple/globals.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -158,11 +158,11 @@ class ListTileSwitch extends StatefulWidget {
   final void Function(bool)? onChanged;
 
   const ListTileSwitch({
-    Key? key,
+    super.key,
     required this.text,
     this.value = false,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<ListTileSwitch> createState() => _ListTileSwitchState();
