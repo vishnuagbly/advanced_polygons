@@ -58,11 +58,13 @@ class Edge {
 
     /* In case of direct tangent we will be getting the external point,
     *  Otherwise will be getting the internal point. */
-    final commonPoint = (
-      first.circle.center,
-      second.circle.center
-    ).pointInBetween(
-        (first.circle.radius, (transverse ? 1 : -1) * second.circle.radius));
+    final bothRadiusAreZero =
+        first.circle.radius == 0 && second.circle.radius == 0;
+    final transverseFactor = (transverse ? 1 : -1);
+    final commonPoint = (first.circle.center, second.circle.center)
+        .pointInBetween((bothRadiusAreZero
+            ? (1, transverseFactor)
+            : (first.circle.radius, transverseFactor * second.circle.radius)));
 
     //Angle between a single direct tangent and the line joining the centres.
     final slopeDiff = Angle.fromSin(
@@ -98,10 +100,14 @@ class Edge {
   ///
   ///We check the direction of both by doing the cross product of both vectors.
   static bool areCorrectPoints(Coord first, Coord second, Coord center,
-      [bool clockwise = true]) {
+      [bool clockwise = true, num errorTolerance = kDefaultError]) {
     final line = second - first;
     final radius = center - second;
-    return (line.cross(radius) < 0) == clockwise;
+
+    final crossValue = line.cross(radius);
+    if (crossValue.abs() <= errorTolerance) return true;
+
+    return (crossValue < 0) == clockwise;
   }
 
   Edge get flipY => Edge(first.flipY, second.flipY);

@@ -8,8 +8,8 @@ class Angle {
   final num base;
 
   Angle.raw(this.front, this.base)
-      : assert(front == 0 && base == 0, 'Both Front and Base should not be 0'),
-        assert(front.isNaN || base.isNaN,
+      : assert(front != 0 || base != 0, 'Both Front and Base should not be 0'),
+        assert(!(front.isNaN || base.isNaN),
             'Neither of Front and Base should be NaN');
 
   factory Angle.fromSides(num front, num base) {

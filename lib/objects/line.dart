@@ -30,9 +30,9 @@ class Line {
   num get c => bias;
 
   ///Returns null if lines are parallel
-  Coord? intersect(Line line, [num error = kDefaultError]) {
+  Coord? intersect(Line line, [num errorTolerance = kDefaultError]) {
     final denominator = ((slope.a * line.slope.b) - (slope.b * line.slope.a));
-    if (denominator.abs() <= error) return null;
+    if (denominator.abs() <= errorTolerance) return null;
     final x = ((line.c * slope.b) - (line.slope.b * c)) / denominator;
     final y = ((c * line.slope.a) - (slope.a * line.c)) / denominator;
     return (x, y);
