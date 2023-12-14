@@ -73,7 +73,9 @@ class Line {
     final pointOnLine = pointOnLineClosestTo(point);
 
     final distFromPoint = distanceFromPoint(point);
-    if (distFromPoint > distance) return (pointOnLine, pointOnLine);
+    if (distFromPoint > distance || distance == 0) {
+      return (pointOnLine, pointOnLine);
+    }
 
     final angleMadeByPoint = Angle.fromCos(distFromPoint, distance);
     final distOnLine = distance * angleMadeByPoint.sinValue;
