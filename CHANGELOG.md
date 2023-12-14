@@ -1,3 +1,6 @@
+## 0.0.1+4
+Fixed all bugs associated with zero radius.
+
 ## 0.0.1+3
 
 Added direct return method to Line.pointsOnLineFromPoint function, for zero distance value.
