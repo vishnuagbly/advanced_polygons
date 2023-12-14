@@ -75,7 +75,7 @@ class Line {
     final distFromPoint = distanceFromPoint(point);
     if (distFromPoint > distance) return (pointOnLine, pointOnLine);
 
-    final angleMadeByPoint = Angle.fromCos(distFromPoint / distance);
+    final angleMadeByPoint = Angle.fromCos(distFromPoint, distance);
     final distOnLine = distance * angleMadeByPoint.sinValue;
 
     final first = _addDistToPointOnLine(pointOnLine, slope, distOnLine);
